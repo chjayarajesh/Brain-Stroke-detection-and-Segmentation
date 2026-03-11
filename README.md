@@ -93,11 +93,12 @@ OVERLAY images → lesion masks
 
 ---
 
-###Outputs
+### Outputs
 
 ![Tested outputs](segmentes_samples.png)
 
 ---
+
 # ⚙️ Installation
 
 Clone the repository
