@@ -35,7 +35,7 @@ This system can function as a **clinical decision support tool** to assist radio
 
 The classification module identifies the **type of stroke** present in the CT scan.
 
-![Classification Flowchart](classification flowchart.jpeg)
+![Classification Flowchart](classification_flowchart.jpeg)
 
 Steps involved:
 
@@ -51,7 +51,7 @@ Steps involved:
 
 After stroke detection, segmentation identifies the **exact lesion region**.
 
-![Segmentation Flowchart](segmentation flowchart.jpeg)
+![Segmentation Flowchart](segmentation_flowchart.jpeg)
 
 Segmentation workflow:
 
@@ -93,6 +93,11 @@ OVERLAY images → lesion masks
 
 ---
 
+###Outputs
+
+![Tested outputs](segmentes_samples.png)
+
+---
 # ⚙️ Installation
 
 Clone the repository
