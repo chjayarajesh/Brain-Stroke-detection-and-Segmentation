@@ -1,48 +1,115 @@
-# Deep Learning-Based Stroke Classification and Lesion Segmentation Using CT Images
+# 🧠 Deep Learning-Based Stroke Classification and Lesion Segmentation Using CT Images
 
-## 📖 Abstract  
-Stroke is a major cause of mortality and long-term disability, requiring accurate classification and lesion localization for effective treatment planning.  
-This work presents a **deep learning framework** for stroke type classification and lesion segmentation using **CT brain images**.  
+## 📖 Abstract
 
-- **Preprocessing & Augmentation** applied to improve data quality and address class imbalance.  
-- **Transfer learning (ConvNeXt / DenseNet)** used for stroke type classification (**Ischemic, Hemorrhagic, Normal**).  
-- **U-Net** trained for lesion segmentation with expert-annotated masks.  
-- Integrated **two-stage pipeline**:  
-  1. Classify stroke type.  
-  2. Segment lesion if present.  
+Stroke is a major cause of mortality and long-term disability worldwide. Accurate classification of stroke type and precise localization of lesions are critical for effective treatment planning.
 
-Performance is evaluated with **accuracy, precision, recall, specificity, and F1-score**.  
-This framework demonstrates strong potential as a **clinical decision support tool**, offering automated, reliable, and scalable solutions for assisting radiologists in stroke analysis and treatment planning.  
+This project presents a **deep learning-based framework** for automated **stroke classification and lesion segmentation** using **CT brain images**.
 
-**Keywords**: Stroke Classification, Deep Learning, Transfer Learning, U-Net, Segmentation  
+The proposed system integrates two stages:
+
+1️⃣ **Stroke Type Classification**
+- Uses **transfer learning models (ConvNeXt / DenseNet)**
+- Classifies CT images into:
+  - Ischemic Stroke
+  - Hemorrhagic Stroke
+  - Normal
+
+2️⃣ **Lesion Segmentation**
+- Uses **U-Net architecture**
+- Identifies and segments stroke-affected brain regions
+
+Additional improvements include:
+
+- Image preprocessing and augmentation
+- Handling class imbalance
+- Performance evaluation using **accuracy, precision, recall, specificity, and F1-score**
+
+This system can function as a **clinical decision support tool** to assist radiologists in stroke detection and treatment planning.
+
+**Keywords:** Stroke Detection, Deep Learning, Transfer Learning, U-Net, Medical Image Segmentation
 
 ---
 
-## 📂 Dataset  
-- **Source**: [Brain Stroke CT Dataset (Kaggle)](https://www.kaggle.com/datasets/ozguraslank/brain-stroke-ct-dataset)  
-- **Classes**:  
-  - *Ischemia*  
-  - *Hemorrhage (Bleeding)*  
-  - *Normal*  
-- **Format**: CT images (`.png`) and lesion masks (`.png`)  
-- **Preprocessing**:  
-  - Train/Validation/Test split (70/15/15)  
-  - Normal cases: auto-generated zero masks  
+# 🧠 Classification Pipeline
+
+The classification module identifies the **type of stroke** present in the CT scan.
+
+![Classification Flowchart](classification flowchart.jpeg)
+
+Steps involved:
+
+1. CT scan input
+2. Image preprocessing and normalization
+3. Feature extraction using transfer learning models
+4. Classification into stroke categories
+5. Final prediction output
 
 ---
 
-## ⚙️ Installation  
+# 🧠 Segmentation Pipeline
+
+After stroke detection, segmentation identifies the **exact lesion region**.
+
+![Segmentation Flowchart](segmentation flowchart.jpeg)
+
+Segmentation workflow:
+
+1. Input CT scan
+2. Image preprocessing
+3. U-Net segmentation model
+4. Lesion mask prediction
+5. Overlay segmented region on CT image
+
+---
+
+# 📂 Dataset
+
+Dataset used in this project:
+
+https://www.kaggle.com/datasets/ozguraslank/brain-stroke-ct-dataset
+
+Dataset contains **CT brain images belonging to three classes**:
+
+- Ischemia
+- Hemorrhage (Bleeding)
+- Normal
+
+### Dataset Format
+
+Dataset contains:
+
+```
+PNG images → CT scan images  
+OVERLAY images → lesion masks
+```
+
+### Preprocessing Steps
+
+- Dataset split into **Train / Validation / Test (70 / 15 / 15)**
+- Image resizing and normalization
+- Data augmentation
+- Automatic **zero-mask creation for Normal images**
+
+---
+
+# ⚙️ Installation
+
+Clone the repository
 
 ```bash
-# Clone this repo
-git clone https://github.com/your-username/stroke-classification-segmentation.git
-cd stroke-classification-segmentation
+git clone https://github.com/chjayarajesh/Brain-Stroke-detection-and-Segmentation.git
+cd Brain-Stroke-detection-and-Segmentation
+```
 
-# Install dependencies
+Install dependencies
+
+```bash
 pip install -r requirements.txt
 ```
 
-**requirements.txt** should include:
+### requirements.txt
+
 ```
 torch
 torchvision
@@ -57,99 +124,115 @@ pillow
 
 ---
 
-## 🚀 Usage  
+# 🚀 Usage
 
-1. **Download dataset** using Kaggle API:
-   ```bash
-   kaggle datasets download -d ozguraslank/brain-stroke-ct-dataset -p ./dataset
-   unzip dataset/brain-stroke-ct-dataset.zip -d ./dataset
-   ```
+### 1️⃣ Download Dataset
 
-2. **Run preprocessing** (splits dataset into train/val/test):
-   ```python
-   python preprocess.py
-   ```
-
-3. **Train classification model**:
-   ```python
-   python train_classifier.py
-   ```
-
-4. **Train segmentation model (U-Net)**:
-   ```python
-   python train_unet.py
-   ```
-
-5. **Evaluate results**:
-   - Classification metrics (accuracy, precision, recall, F1)  
-   - Segmentation metrics (Dice, IoU, pixel accuracy)  
-   - Visualizations (confusion matrix, segmented lesion overlays)  
-
----
-
-## 📊 Results  
-- High **classification accuracy (>90%)** across stroke types.  
-- U-Net segmentation achieves **precise lesion localization**.  
-- Example visualizations:  
-  - Confusion matrices  
-  - Loss/accuracy curves  
-  - Segmentation overlays  
-
----
-
-## 📌 Project Structure  
-
-```
-/content/
-│── dataset/
-│   └── Brain_Stroke_CT_Dataset/
-│       ├── Bleeding/
-│       │   ├── PNG/
-│       │   └── OVERLAY/
-│       ├── Ischemia/
-│       │   ├── PNG/
-│       │   └── OVERLAY/
-│       └── Normal/
-│           ├── PNG/
-│           └── OVERLAY/   (may be empty → zero masks auto-created)
-│
-│── train/
-│   ├── PNG/
-│   │   ├── Bleeding/
-│   │   ├── Ischemia/
-│   │   └── Normal/
-│   └── OVERLAY/
-│       ├── Bleeding/
-│       ├── Ischemia/
-│       └── Normal/
-│
-│── val/
-│   ├── PNG/
-│   │   ├── Bleeding/
-│   │   ├── Ischemia/
-│   │   └── Normal/
-│   └── OVERLAY/
-│       ├── Bleeding/
-│       ├── Ischemia/
-│       └── Normal/
-│
-│── test/
-│   ├── PNG/
-│   │   ├── Bleeding/
-│   │   ├── Ischemia/
-│   │   └── Normal/
-│   └── OVERLAY/
-│       ├── Bleeding/
-│       ├── Ischemia/
-│       └── Normal/
-│
-│── Stroke_detection_and_segmentation.ipynb
-
+```bash
+kaggle datasets download -d ozguraslank/brain-stroke-ct-dataset -p ./dataset
+unzip dataset/brain-stroke-ct-dataset.zip -d ./dataset
 ```
 
 ---
 
-## 👨‍💻 Authors  
-- **CH JAYA RAJESH**  
+### 2️⃣ Run Preprocessing
 
+```bash
+python preprocess.py
+```
 
+This step:
+
+- Cleans dataset
+- Splits dataset into train / validation / test
+- Prepares segmentation masks
+
+---
+
+### 3️⃣ Train Classification Model
+
+```bash
+python train_classifier.py
+```
+
+Model predicts stroke type:
+
+- Ischemia
+- Hemorrhage
+- Normal
+
+---
+
+### 4️⃣ Train Segmentation Model (U-Net)
+
+```bash
+python train_unet.py
+```
+
+U-Net predicts **lesion masks for stroke regions**.
+
+---
+
+### 5️⃣ Evaluate Results
+
+Evaluation metrics used:
+
+- Accuracy
+- Precision
+- Recall
+- F1-Score
+- Dice Score
+- Intersection over Union (IoU)
+
+---
+
+# 📊 Classification Results
+
+The confusion matrix below shows classification performance.
+
+![Confusion Matrix](detection confusion_matrix.png)
+
+---
+
+# 📈 Model Training Accuracy
+
+The graph below shows the **training accuracy trend during training**.
+
+![Accuracy Graph](class_accuracy.png)
+
+---
+
+# 🧠 Segmentation Results
+
+Examples of segmented stroke lesions predicted by the U-Net model.
+
+![Segmentation Samples](segmentes samples.png)
+
+---
+
+# 🎯 Key Features
+
+✔ Deep learning-based stroke detection  
+✔ Transfer learning for improved classification  
+✔ U-Net architecture for lesion segmentation  
+✔ Automated preprocessing pipeline  
+✔ Visualization of predictions  
+✔ High classification accuracy (>90%)
+
+---
+
+# 🔮 Future Improvements
+
+- Apply **3D CNN models for volumetric CT scans**
+- Deploy as a **web application**
+- Integrate with **hospital PACS systems**
+- Improve segmentation accuracy using **Attention U-Net**
+
+---
+
+# 👨‍💻 Author
+
+**CH JAYA RAJESH**
+
+GitHub  
+https://github.com/chjayarajesh
